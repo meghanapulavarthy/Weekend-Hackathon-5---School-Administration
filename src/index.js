@@ -70,7 +70,7 @@ app.put("/api/student/:id",(req,res) => {
      }
 
      app.delete("/api/student/:id", (req,res) => {
-         const idToSearch = eq.params.id;
+         const idToSearch = req.params.id;
          const matchedIdx = localStudentArray.findIndex(
              (student) => student.id === Number(idToSearch)
          );
