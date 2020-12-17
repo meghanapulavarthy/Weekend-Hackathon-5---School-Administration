@@ -10,6 +10,79 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // your code goes here
 
+const studentArray = require("./InitialData");
+const localStudentArray = [...studentArray];
+
+app.get("/api/student",(req,res) => {
+    res.send(localStudentArray);
+});
+
+app.get("/api/student/:id",(req,res)=> {
+    const idToSearch =req.params.id;
+    const matched =localStudentArray.filter(
+        (student) => student.id === Number(idToSearch)
+    );
+    if(matched.length === 0){
+        res.sendStatus(404);
+    }else{
+        res.send(matched[0]);
+    }
+});
+maxId = localStudentArray.length();
+
+const isNullorUndefined = (val) => val === null || val === undefined;
+
+app.post("/api/student", (req,res) => {
+    const newStudent =req.body;
+    const {name, currentClass, division} = newStudent;
+    if(isNullorUndefined(name) || 
+    isNullorUndefined(currentClass) ||
+    isNullorUndefined(division)
+    ){
+        res.sendStatus(400);
+    } else{
+        const newId =maxId+1;
+        maxId = newId;
+        newStudent.id =newId;
+        localStudentArray.push(newStudent);
+        res.send({id:newId});
+    }
+});
+
+app.put("/api/student/:id",(req,res) => {
+    const idToSearch = req.params.id;
+    const update = req.body;
+    const {name, currentClass, division} = update;
+    const matchedIdx = localStudentArray.findIndex(
+        (student) => student.id === Number(idToSearch)
+     );
+     if(isNullorUndefined(name) && isNullorUndefined(currentClass) && isNullorUndefined(division)){
+         res.sendStatus(400);
+     }else{
+         if(!isNullorUndefined(name)){
+             localStudentArray[matchedIdx].name = name;;
+         }else if(!isNullorUndefined(currentClass)){
+             localStudentArray[matchedIdx].currentClass=currentClass;
+         }else if(!isNullorUndefined(division)){
+             localStudentArray[matchedIdx].division =division;
+         }
+         res.sendStatus(200);
+     }
+
+     app.delete("/api/student/:id", (req,res) => {
+         const idToSearch = eq.params.id;
+         const matchedIdx = localStudentArray.findIndex(
+             (student) => student.id === Number(idToSearch)
+         );
+         if(matchedIdx === -1){
+             res.sendStatus(404);
+         }else{
+             localStudentArray =localStudentArray.splice(matchedIdx,1);
+             res.sendStatus(200);
+         }
+     })
+});
+
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
