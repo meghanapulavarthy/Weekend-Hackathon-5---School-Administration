@@ -65,9 +65,9 @@ app.put("/api/student/:id",(req,res) => {
      }else{
          if(!isNullorUndefined(name)){
              localStudentArray[matchedIdx].name = name;
-         }else if(!isNullorUndefined(currentClass)){
+         }if(!isNullorUndefined(currentClass)){
              localStudentArray[matchedIdx].currentClass=Number(currentClass);
-         }else if(!isNullorUndefined(division)){
+         }if(!isNullorUndefined(division)){
              localStudentArray[matchedIdx].division =division;
          }
          res.sendStatus(200);
