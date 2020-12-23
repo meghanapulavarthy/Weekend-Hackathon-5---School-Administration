@@ -12,10 +12,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // your code goes here
-
-
-
-
 app.get("/api/student",(req,res) => {
     res.send(localStudentArray);
 });
@@ -86,7 +82,7 @@ app.delete("/api/student/:id", (req,res) => {
         localStudentArray.splice(matchedIdx,1);
         res.sendStatus(200);
     }
-})
+});
 
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
