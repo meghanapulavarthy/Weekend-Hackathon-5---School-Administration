@@ -47,6 +47,7 @@ app.post("/api/student", (req,res) => {
         const newId =maxId+1;
         maxId = newId;
         newStudent.id =newId;
+        newStudent.currentClass = Number(currentClass);
         localStudentArray.push(newStudent);
         res.send({id:newId});
     }
@@ -63,9 +64,9 @@ app.put("/api/student/:id",(req,res) => {
          res.sendStatus(400);
      }else{
          if(!isNullorUndefined(name)){
-             localStudentArray[matchedIdx].name = name;;
+             localStudentArray[matchedIdx].name = name;
          }else if(!isNullorUndefined(currentClass)){
-             localStudentArray[matchedIdx].currentClass=currentClass;
+             localStudentArray[matchedIdx].currentClass=Number(currentClass);
          }else if(!isNullorUndefined(division)){
              localStudentArray[matchedIdx].division =division;
          }
@@ -82,7 +83,7 @@ app.delete("/api/student/:id", (req,res) => {
     if(matchedIdx === -1){
         res.sendStatus(404);
     }else{
-        localStudentArray =localStudentArray.splice(matchedIdx,1);
+        localStudentArray.splice(matchedIdx,1);
         res.sendStatus(200);
     }
 })
