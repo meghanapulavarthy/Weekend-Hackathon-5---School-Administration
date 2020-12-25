@@ -56,6 +56,10 @@ app.put("/api/student/:id",(req,res) => {
     const matchedIdx = localStudentArray.findIndex(
         (student) => student.id === Number(idToSearch)
      );
+     if(matchedIdx === -1){
+         res.sendStatus(400);
+     }
+     else{
      if(isNullorUndefined(name) && isNullorUndefined(currentClass) && isNullorUndefined(division)){
          res.sendStatus(400);
      }else{
@@ -68,6 +72,7 @@ app.put("/api/student/:id",(req,res) => {
          }
          res.sendStatus(200);
      }
+    }
 
 });
 
