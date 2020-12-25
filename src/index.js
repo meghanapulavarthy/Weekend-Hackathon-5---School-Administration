@@ -27,7 +27,7 @@ app.get("/api/student/:id",(req,res)=> {
         res.send(matched[0]);
     }
 });
-let maxId = localStudentArray.length();
+let maxId = localStudentArray.length;
 
 const isNullorUndefined = (val) => val === null || val === undefined;
 
